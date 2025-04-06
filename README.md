@@ -6,7 +6,7 @@ This directory contains the automated tests for the FMInatorul project. These te
 
 # Test Categories and Purpose
 
-The tests are organized into four main categories: StudentsAndProfessorsFlowTests (Integration Tests), HomeControllerSecurityTests (Security Tests), ProfessorsControllerSecurityTests (Security Tests), RoomsControllerSecurityTests (Security Tests), StudentsControllerSecurityTests (Security Tests), and CriticalFunctionsUnitTests (Unit Tests). Each category has a specific purpose in ensuring the application's reliability and security.
+The tests are organized into three main categories: StudentsAndProfessorsFlowTests (Integration Tests), HomeControllerSecurityTests (Security Tests), ProfessorsControllerSecurityTests (Security Tests), RoomsControllerSecurityTests (Security Tests), StudentsControllerSecurityTests (Security Tests), and CriticalFunctionsUnitTests (Unit Tests). Each category has a specific purpose in ensuring the application's reliability and security.
 
 ## 1. Integration Tests
 
