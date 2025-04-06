@@ -152,6 +152,7 @@ These tests explicitly focus on the security of the StudentsController, ensuring
   Mocks a PDF file upload and overrides a static helper method (HttpHelper.GetJwtTokenAsync) to return an empty token, simulating authentication failure. Verifies that the result is an ObjectResult with a status code of 401 and an error message like "Failed to authenticate with the Flask API".
 
 ---
+# Common Patterns and Tools
 
 - *Mocking*
 Mocking: All tests explicitly use the Moq library to create mock objects for dependencies such as UserManager, RoleManager, IFormFile, HttpContext, ILogger, and IHubContext. This isolates the code being tested from external systems, ensuring tests are fast and reliable.
@@ -161,6 +162,8 @@ xUnit: The tests are explicitly written using the xUnit testing framework, with 
 
 - *Async*
 Async Testing: Many tests are explicitly asynchronous (async Task) to handle operations like file uploads, database interactions, and API calls, reflecting real-world application behavior.
+
+---
 
 ## Conclusion
 
