@@ -1,252 +1,151 @@
-# Inginerie Software
+# FMInatorul.Tests
 
-Demo Video MDS (iunie 2024) + IS (ianuarie 2025): https://drive.google.com/drive/folders/1xtdYpRfc5MC_he19hkcUQl3Nkel8XM9g
+This directory contains the automated tests for the FMInatorul project. The tests are divided into two main categories: Integration/Unit Tests and Security Tests. Each category aims to verify different aspects of the application's functionality and security.
 
-## Secondary Github repository for AI-API
-https://github.com/MihaiB-dev/api-pdf-gemini
+---
 
-## Product Vision
+## 1. Integration & Unit Tests
 
-`FOR` students in various specializations   
-`WHO` need efficient learning tools and collaboration opportunities   
+### StudentsAndProfessorsFlowTests.cs
 
-**The FMInatorul** is a web-based educational platform   
-`THAT` generates personalized quizzes from study materials, provides feedback, and allows peer communication   
-`UNLIKE` traditional study apps that only offer static content or generic quizzes   
-`OUR PRODUCT` uses AI to generate dynamic quizzes based on uploaded PDFs,
-allows subject-specific quiz participation, 
-and supports collaborative learning in virtual rooms with real-time interactions.
+This file contains tests that verify workflows involving interactions between students and professors, as well as the PDF file upload functionality and quiz generation.
 
-## User problem and solution
+- *Student_UploadPdf_ShouldSaveFileAndGenerateQuiz*  
+  Tests the method that handles the PDF file upload in the student controller. It uses a valid PDF file (correct size and type) to ensure that the method correctly processes the file and generates a quiz object.
 
-For the app we've prepared [user personas](Backlog/User-personas.md) with [user stories](Backlog/User-Stories.md) and some [scenarios](Backlog/Scenarios.md) for a better understanding of the problem we are trying to solve. 
+- *EditCollegeProf_UserIsStudent_ReturnsForbidResult*  
+  Checks that a student user cannot modify a professor's data. The test creates entities for a college, student, professor, subject, question, and answer option, then attempts to edit a professor's data using a student account. The expected outcome is a ForbidResult, indicating that access is denied.
 
-This is a short summary:
+---
 
-`Problem: Overwhelming and Ineffective study resources: `
+### CriticalFunctionsUnitTests.cs
 
-Students like Mirel, who prefer quick and easy study methods, and Bursarescu, who seek advanced learning tools, face challenges with traditional resources. Mirel struggles with long, dense materials, while Bursarescu finds standard resources too basic.
+This file contains unit tests for critical functions in the student controller, focusing on the UploadPdf method. The goal is to validate that the PDF upload process correctly generates a quiz, and that the resulting quiz contains valid questions and answers.
 
-`Solution: Personalized and Interactive Learning: `  
+- *UploadPdf_QuizNotNullAsync*  
+  Ensures that the UploadPdf method does not return a Bad Request response when a valid PDF file is used.
 
-Our app uses AI to generate personalized quizzes from PDFs, breaking content into manageable sections for Mirel and offering specialization-focused quizzes for Bursarescu. Collaborative quiz rooms provide an engaging way for students to learn with peers, enhancing motivation and retention.
+- *UploadPdf_QuizHasQuestionsAsync*  
+  Confirms that the generated quiz object contains questions and that the list of questions is not empty. It also handles the possibility of an error response (Bad Request) in case of an invalid file.
 
-## Architecture
+- *UploadPdf_QuestionsHaveText*  
+  For each question in the quiz, this test ensures that the question text is not null or composed solely of whitespace.
 
-#### System Design
-![image](Backlog/system-diagram.drawio.png)
+- *UploadPdf_QuestionsHaveAnswers*  
+  Verifies that each quiz question contains at least one valid option (choice), ensuring that the list of answer options is neither null nor empty.
 
-#### Container Diagram
-![image](Backlog/container.drawio.png)
+- *UploadPdf_QuestionsHaveCorrectAnswers*  
+  Ensures that each quiz question has an associated correct answer by verifying that the answer property is not null.
 
-#### Component Diagram
-![image](Backlog/component.drawio.png)
+---
 
+## 2. Security Tests
 
-There are other diagrams such as : [flowchart](Backlog/Flowchart.png), [database diagram](Backlog/Old-Data/Database-Diagram.jpeg) and [UML diagram](Backlog/Old-Data/UML-Diagram.png).
+The security tests ensure that access to critical actions in the application controllers is properly restricted and that unauthorized users receive a "Challenge" response (401 Unauthorized).
 
+### HomeControllerSecurityTests.cs
 
-## Product features
+This file focuses on testing the security aspects of the main controller (HomeController), ensuring that the application adheres to authentication and authorization rules.
 
-- [x] **AI-Generated Quizzes:** Automatically generate a 10-question quiz from uploaded PDFs, customized to the content of the document.
+- *Index, IndexNew, and Privacy*  
+  These tests verify that the Index, IndexNew, and Privacy actions correctly return a ViewResult without specifying a view name, meaning that the default view is used.
 
-- [x] **Chat Functionality:** Enable real-time communication between students via a built-in chat, allowing collaboration and discussion.
+- *Error_ReturnsViewResult_WithErrorDetails*  
+  Ensures that when the Error action is called, it returns a view containing error details (e.g., RequestId) and that the trace identifier is correctly set.
 
-- [x] **Preloaded Quizzes:** Allow users to choose from a database of pre-existing quizzes, organized by subject, managed by Admins and Professors.
+- *Admin_ReturnsRedirect_WhenUserIsNotAdmin & Admin_ReturnsView_WhenUserIsAdmin*  
+  Tests the behavior of the Admin action:
+  - If the user is not an administrator, a redirection to the Index action is expected.
+  - If the user is an administrator, a ViewResult is returned with the relevant data (e.g., the list of subjects).
 
-- [x] **References/Links for Study Material:** Provide external references and links related to the quiz questions to enhance learning.
+- *Add_Questions_FileUpload_ReturnsBadRequest_WhenFileIsInvalid & Add_Questions_FileUpload_ReturnsSuccess_WhenFileIsPdf*  
+  Verifies the file upload logic in the Add_Questions action:
+  - In the case of an invalid file type (e.g., ZIP), a Bad Request response is returned.
+  - For a valid PDF file, the workflow continues correctly, returning either an Unauthorized status (if applicable) or a redirection to the Admin page.
 
-- [x] **Specialization Customization:** Support multiple specializations, adapting quizzes and content to different fields of study.
+---
 
-- [x] **API Security System:** Restrict quiz generation API access to registered users, ensuring only authorized individuals can use the feature
+### ProfessorsControllerSecurityTests.cs
 
-- [x] **Feedback System:** Provide feedback at the end of each quiz, indicating which answers were correct and which were incorrect.
+This file tests the security of actions in the professors' controller.
 
-- [x] **Collaborative Quiz Rooms:** Create virtual rooms where students can participate in quizzes together in real-time.
+- *Index_ShouldReturn401_WhenUserIsUnauthorized*  
+  Checks that the Index method in the professors' controller returns a ChallengeResult when the user is not authenticated.
 
-- [x] **Error Tracking:** Centralize incorrect answers across quizzes and allow users to review them for a better understanding of the course.
+- *EditMaterie_ShouldReturn401_WhenUserIsUnauthorized*  
+  Tests that access to the EditMaterie method is restricted for unauthorized users, returning a ChallengeResult.
 
-- [ ] (50%) **PDF Sectional Quiz Generation:** Split uploaded PDFs into sections and generate specific questions for each section.
+- *EditMaterie_WithProfessor_ShouldReturn401_WhenUserIsUnauthorized*  
+  Creates entities for a college, users, student, and professor, as well as subject and questions, and verifies that the EditMaterie method (called with a professor object) returns a ChallengeResult when the user is not authenticated.
 
-## Non-functional architecture tasks:
+- *Valideaza_ShouldReturn401_WhenUserIsUnauthorized*  
+  Checks that access to the Valideaza method (used for validating questions) is blocked for unauthorized users.
 
-- Encrypt sensitive data, such as user progress, quiz generation, file transfer and quiz results, both in transit using HTTPS and at rest.
+- *NuValideaza_ShouldReturn401_WhenUserIsUnauthorized*  
+  Similarly, ensures that the NuValideaza method (used for invalidating questions) returns a ChallengeResult for unauthorized access.
 
-- Prevent unauthorized access to quiz-generation APIs by requiring secure API tokens.
+---
 
-- Document API endpoints for external integrations with university systems or learning management platforms (we used swagger for documentation).
+### RoomsControllerSecurityTests.cs
 
-- Optimize the UI for both mobile and desktop platforms to accommodate students studying on the go.
+This file tests the security for managing "rooms" in the application.
 
-- Support pdf files up to 300 pages for hardcore courses.
+- *JoinRoom_ShouldReturnUnauthorized_WhenUserIsNotLoggedIn*  
+  Verifies that an unauthenticated user receives a JSON response indicating that login is required to join a room.
 
-- Monitor cloud service costs (storage and compute).
+- *JoinRoom_ShouldReturnSuccess_WhenUserIsAuthorized*  
+  Tests the scenario where an authorized user can successfully join a room. The database is seeded with relevant entities (college, users, subject, etc.), and the response confirms a successful operation.
 
-- Use role-based policies to define permissions for actions like generating quizzes, viewing student data, or accessing admin dashboards.
+- *JoinRoom_ShouldReturnNotFound_WhenRoomDoesNotExist*  
+  Ensures that if a user tries to join a non-existent room, a JSON response is returned with the message "Room not found."
 
--  Restrict frontend UI components and routes based on roles (Hide admin-only features for students).
+- *LeaveRoom_ShouldReturnSuccess_WhenUserIsInRoom*  
+  Tests the functionality of leaving a room for a user who is already a member, verifying that the operation is successful.
 
+- *LeaveRoom_ShouldReturnError_WhenUserIsNotInRoom*  
+  Checks that if a user attempts to leave a room they are not part of, a JSON response is returned indicating the error (e.g., "Room not found").
 
-## QA
+---
 
-#### I QA Objectives
+### StudentsControllerSecurityTests.cs
 
-Created automated testing for the following:
+This file contains security tests for the actions in the students' controller, protecting operations that require authentication.
 
-- The file upload process.
-- The quiz generation logic.
-- The handling of user roles and permissions.
+- *Index_ShouldReturn401_WhenUserIsUnauthorized*  
+  Tests access to the Index action, verifying that an unauthenticated user receives a ChallengeResult.
 
-All tests aim to validate the correct functionality of the UploadPdf method in the StudentsController by ensuring that PDF files are uploaded and processed correctly, quizzes are generated, and questions and answers are populated accurately.
-Tested permissions, and verified that the system properly handles permission-related cases, where unauthorized users (e.g., students) cannot access restricted actions (e.g., editing professor details).
+- *Play_ShouldReturn401_WhenUserIsUnauthorized*  
+  Verifies that the Play action (used to start a game session or quiz) returns a ChallengeResult for unauthorized users.
 
-#### II The testing process
+- *UploadPdf (GET) - UploadPdf_ShouldReturn401_WhenUserIsNotAauthorized*  
+  Ensures that the GET request for the UploadPdf action is restricted and returns a ChallengeResult if the user is not authenticated.
 
-1) Requirements Phase
+- *UploadPdf (POST) - UploadPdf_ShouldReturn401_WhenAuthenticationFails*  
+  Tests the scenario where, during the PDF upload, authentication fails (for example, when the JWT token is empty). It checks that an error response (status 401) with a specific message is returned.
 
-Conducted Validation Testing to confirm functional requirements, such as quiz generation accuracy and results accuracy, and system constraints.
+- *ChatView_ShouldReturn401_WhenUserIsUnauthorized*  
+  Verifies that access to the ChatView action is restricted for unauthorized users.
 
-2) Design Phase
+- *MateriiSingle_ShouldReturn401_WhenUserIsUnauthorized*  
+  Tests access to the MateriiSingle action, ensuring that only authenticated users can access detailed subject information.
 
-Analyzed the design of controllers, authentication, and database interaction.
+- *EditYear_ShouldReturn401_WhenUserIsUnauthorized*  
+  Ensures that the EditYear method (for editing the study year) is not accessible to unauthorized users.
 
-3) Implementation Phase
+- *EditSemester_ShouldReturn401_WhenUserIsUnauthorized*  
+  Similar to the previous test, but for the EditSemester action, which modifies the study semester.
 
-Applied Unit Testing to verify individual methods (e.g., UploadPdf).
-Wrote mock-based tests for services like UserManager and file uploads.
+- *EditCollege_ShouldReturn401_WhenUserIsUnauthorized*  
+  Checks that access to the college (faculty) editing action is protected and returns a ChallengeResult for unauthenticated users.
 
-4) Integration Phase
+---
 
-Used Integration Testing to validate the flow between the Authentication Service, Database, and the core AI module.
+## Conclusion
 
-5) System Testing
+The tests in the *FMInatorul.Tests* directory ensure the quality and security of critical functionalities in the FMInatorul application by covering:
 
-Conducted End-to-End Testing to ensure seamless user journeys for professors and students.
+- *Integrated workflows* and unit functions (such as PDF file upload and quiz generation) within the student and professor controllers.
+- *Security aspects* for all main controllers (Home, Professors, Rooms, Students), ensuring that only authenticated and authorized users can access critical operations.
+- The protection of operations related to managing rooms, chat functionality, and other sensitive data flows by returning a ChallengeResult (equivalent to a 401 Unauthorized status) when access is not permitted.
 
-
-#### III Testing Methods
-
-1) Unit Testing 
-
-- Validated individual components like StudentsController, methods like UploadPdf, and their logic.
-- Verified correct interaction with services such as UserManager, SignInManager, and the database.
-
-2) Integration Testing
-
-- Ensured components work together correctly (e.g., controllers interacting with services and the database).
-- Validated the interaction between the Authentication Service and user roles (Student, Professor).
-
-3) System Testing
-
-- Tested the system flow (e.g., uploading a PDF, extracting quiz questions, and quizzes have right answers).
-
-4) Security Testing
-
-- Authentication required for different parts of the application, and we get forbidden if we try different things
-that he doesn't have authorization.
-
-5) Validation Testing
-
--  Ensured alignment with business requirements, such as quiz generation accuracy and results accuracy.
-
-#### IV Results of testing 
-
-Preliminary Observations:
-
-1) Unit Testing
-
-- Confirmed proper file handling in UploadPdf.
-- Verified that quizzes have valid questions and answers.
-- Detected edge cases (e.g., non-PDF uploads, empty files).
-
-2) Integration Testing
-
-- Verified no potential issues in how the Authentication Service handles session persistence for both roles.
-
-3) System Testing
-
-- The system flow works as intended.
-
-4) Security Testing
-
-Detected and removed gaps in unauthorized access.
-
-5) Validation Testing
-
-AI-based quiz generation meets basic accuracy and doesn't require further optimization to reduce errors in question extraction.
-
-## Security Analysis
-
-The app is divided into two components: the website, which contains most of the application's functionality, and the web service (an in-house API) hosted at https://api.fminatorul.xyz using Nginx. This API is responsible for generating quizzes using AI.
-
-We have carefully considered `security measures` for both components.
-
-#### API:
-A secure HTTPS connection is established between the API and the website, ensuring all traffic is encrypted. This is achieved by hosting the API behind an Nginx server on Google Cloud.
-JSON Web Tokens (JWT) are used for authentication between the API and the website. This ensures that only our services can access the API.
-API testing is secured with a login mechanism that requires a username and password.
-When the website connects to the API, a short-lived JWT with a 1-minute expiration is created. This ensures the API is used only for the specific task at hand and reduces the risk of misuse.
-
-#### Website:
-The app supports three types of users: Admin, Student, and Professor. Each role has specific privileges and access restrictions. Users cannot access features outside their assigned role.
-User registration is limited to email domains such as s.unibuc.ro (students) or unibuc.ro (professors), ensuring only authorized individuals can create accounts.
-Comprehensive tests have been implemented for all controller endpoints to ensure users can only access the features permitted for their roles.
-
-## CI/CD
-
-We used github infrastrcture for most of our CI/CD.  
-
-We've hosted the API on the web : https://api.fminatorul.xyz using `Google Cloud`, `Flask`, `Nginx` and `Guniconrd`. 
-
-- For an easy relocation of the app, we've created a simple `.sh` file that configurates all the server with our settings and starts it automatically. See those files : [google connection setup](https://github.com/MihaiB-dev/api-pdf-gemini/blob/server/setup_google.sh) and [flask and nginx setup](https://github.com/MihaiB-dev/api-pdf-gemini/blob/server/setup_flask_nginx.sh) 
-
-- Moreover, we've connected the server with github action. When the server branch is changed, the server is updated with the new code. The `deployment latency` is 20 seconds.
-
-![Example of a working deploy](Backlog/images/deploy.png)
-
-![Statistics](Backlog/images/statistics_deploy.png)
-
-For the Main-app we used rules for the main branch and we did a pull-request and approved each time we tried to push on this branch (minimum of 1 approval), thus we have a code ready for release.
-
-![pull requests](Backlog/images/pr.png)
-
-Here is a part of our tree branch history:
-
-![Branches](Backlog/images/branches.png)
-
-## Docker
-Make sure you have Docker Desktop or Docker Engine installed. 
-
-### Step 1
-Navigate to the project directory where `docker-compose.yml` is located.
-
-### Step 2
-Run the containers:
-
-```
-docker-compose build
-```
-
-### Step 3
-Start the containers: 
-
-```
-docker-compose up -d
-```
-
-### Step 4
-Check that the containers are running:
-
-```
-docker ps
-```
-
-### Step 5
-Now the app should be accessible at `http://localhost:8080`.
-
-## Maintenance 
-
-We use google cloud for storing the AI-API, thus we pay monthly for a VPS with 2 GB RAM. Moreover, we use google cloud
-bucket for managing files sent between GEMINI AI and our API. 
-
-The costs of running the app resumes to that of the API. 
+These tests are essential for maintaining code stability and for the early detection of issues before the application reaches production.
