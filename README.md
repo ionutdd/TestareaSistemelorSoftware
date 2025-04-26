@@ -294,12 +294,12 @@ public async Task UploadPdf_ShouldReturnValidQuiz()
 
 ### Additional Links
 
-- [Product Vision](Backlog\Product-vision.md)
-- [Product Features](Backlog\Product-features.md)
-- [Scenarios](Backlog\Scenarios.md)
-- [User Stories](Backlog\User-personas.md)
-- [User Personas](Backlog\User-stories.md)
-- [Initial QA Strategy](Backlog\QA.md)
+- [Product Vision](Backlog/Product-vision.md)
+- [Product Features](Backlog/Product-features.md)
+- [Scenarios](Backlog/Scenarios.md)
+- [User Stories](Backlog/User-personas.md)
+- [User Personas](Backlog/User-stories.md)
+- [Initial QA Strategy](Backlog/QA.md)
 
 <br>
 
@@ -488,8 +488,8 @@ docker ps
 
 ## Case Studies and Reports
 
-- [Improving Code Coverage](CaseStudies\Improving_Code_Coverage.md)
-- [Analysis between .NET Framework - xUnit vs NUnit](CaseStudies\Comparative_Analysis_xUnit_NUnit)
+- [Improving Code Coverage](CaseStudies/Improving_Code_Coverage.md)
+- [Analysis between .NET Framework - xUnit vs NUnit](CaseStudies/Comparative_Analysis_xUnit_NUnit)
 - [Report on AI Usage during Research & Development]()
 
 <br>
