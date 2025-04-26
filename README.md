@@ -526,10 +526,8 @@ docker ps
 
 ## TODO 
 
-- Video Prezentare
 - Raport Utilizare AI
 - Prezentare Powerpoint
-- Stryker.NET Documentatie
 
 <br>
 
