@@ -1,38 +1,44 @@
 # FMInatorul Project - Testing Documentation
 
 ## Table of Contents
-- [FMInatorul Project - Testing Documentation](#fminatorul-project---testing-documentation)
-  - [Table of Contents](#table-of-contents)
-  - [Project Overview](#project-overview)
-  - [Product Vision](#product-vision)
-  - [Application Structure](#application-structure)
-  - [Testing Strategy](#testing-strategy)
-    - [1. Integration Tests](#1-integration-tests)
-      - [StudentsAndProfessorsFlowTests.cs](#studentsandprofessorsflowtestscs)
-    - [2. Unit Tests](#2-unit-tests)
-      - [CriticalFunctionsUnitTests.cs](#criticalfunctionsunittestscs)
-    - [3. Security Tests](#3-security-tests)
-      - [HomeControllerSecurityTests.cs](#homecontrollersecuritytestscs)
-      - [ProfessorsControllerSecurityTests.cs](#professorscontrollersecuritytestscs)
-      - [RoomsControllerSecurityTests.cs](#roomscontrollersecuritytestscs)
-      - [StudentsControllerSecurityTests.cs](#studentscontrollersecuritytestscs)
-  - [Testing Implementation](#testing-implementation)
-  - [Diagrams](#diagrams)
-  - [Hardware and Software](#hardware-and-software)
-  - [Tool Versions](#tool-versions)
-  - [Execution Results](#execution-results)
-  - [AI Tool Usage in Testing](#ai-tool-usage-in-testing)
-  - [Security Analysis](#security-analysis)
-  - [CI/CD Pipeline](#cicd-pipeline)
-  - [Docker Instructions](#docker-instructions)
-  - [Research Resources](#research-resources)
-    - [Unit Testing with NUnit and .NET Core](#unit-testing-with-nunit-and-net-core)
-    - [Mutation Testing with Stryker.NET](#mutation-testing-with-strykernet)
-    - [Comparison Case Study between NUnit and xUnit](#comparison-case-study-between-nunit-and-xunit)
-  - [Analysis of Existing State-of-the-Art Applications](#analysis-of-existing-state-of-the-art-applications)
-    - [Kahoot and Quizizz](#kahoot-and-quizizz)
-  - [TODO](#todo)
-  - [References](#references)
+- [Table of Contents](#table-of-contents)
+- [Project Overview](#project-overview)
+- [Product Vision](#product-vision)
+- [Application Structure](#application-structure)
+- [Testing Strategy](#testing-strategy)
+  - [1. Integration Tests](#1-integration-tests)
+    - [StudentsAndProfessorsFlowTests.cs](#studentsandprofessorsflowtestscs)
+  - [2. Unit Tests](#2-unit-tests)
+    - [CriticalFunctionsUnitTests.cs](#criticalfunctionsunittestscs)
+  - [3. Security Tests](#3-security-tests)
+    - [HomeControllerSecurityTests.cs](#homecontrollersecuritytestscs)
+    - [ProfessorsControllerSecurityTests.cs](#professorscontrollersecuritytestscs)
+    - [RoomsControllerSecurityTests.cs](#roomscontrollersecuritytestscs)
+    - [StudentsControllerSecurityTests.cs](#studentscontrollersecuritytestscs)
+- [Testing Implementation](#testing-implementation)
+- [Diagrams](#diagrams)
+  - [System Design](#system-design)
+  - [Container Diagram](#container-diagram)
+  - [Component Diagram](#component-diagram)
+  - [Flowchart](#flowchart)
+  - [Database Diagram](#database-diagram)
+  - [UML Diagram](#uml-diagram)
+  - [Additional Links](#additional-links)
+- [Hardware and Software](#hardware-and-software)
+- [Tool Versions](#tool-versions)
+- [Execution Results](#execution-results)
+- [AI Tool Usage in Testing](#ai-tool-usage-in-testing)
+- [Security Analysis](#security-analysis)
+- [CI/CD Pipeline](#cicd-pipeline)
+- [Docker Instructions](#docker-instructions)
+- [Research Resources](#research-resources)
+  - [Unit Testing with NUnit and .NET Core](#unit-testing-with-nunit-and-net-core)
+  - [Mutation Testing with Stryker.NET](#mutation-testing-with-strykernet)
+  - [Comparison between NUnit and xUnit](#comparison-between-nunit-and-xunit)
+- [Analysis of Existing State-of-the-Art Applications](#analysis-of-existing-state-of-the-art-applications)
+  - [Kahoot and Quizizz](#kahoot-and-quizizz)
+- [Case Studies and Reports](#case-studies-and-reports)
+- [References](#references)
 
 <br>
 
@@ -255,12 +261,45 @@ public async Task UploadPdf_ShouldReturnValidQuiz()
 <br>
 
 ## Diagrams
-- **System Design:** ![](Backlog/system-diagram.drawio.png)
-- **Container Diagram:** ![](Backlog/container.drawio.png)
-- **Component Diagram:** ![](Backlog/component.drawio.png)
-- **Flowchart:** [Flowchart](Backlog/Flowchart.png)
-- **Database Diagram:** [Database Diagram](Backlog/Old-Data/Database-Diagram.jpeg)
-- **UML Diagram:** [UML Diagram](Backlog/Old-Data/UML-Diagram.png)
+
+### System Design
+![](Backlog/system-diagram.drawio.png) 
+
+<br>
+
+### Container Diagram
+![](Backlog/container.drawio.png) 
+
+<br>
+
+### Component Diagram
+![](Backlog/component.drawio.png)
+
+<br>
+
+### Flowchart
+![](Backlog/Flowchart.png)
+
+<br>
+
+### Database Diagram
+![](Backlog/Old-Data/Database-Diagram.jpeg)
+
+<br>
+
+### UML Diagram
+![](Backlog/Old-Data/UML-Diagram.png)
+
+<br>
+
+### Additional Links
+
+- [Product Vision](Backlog\Product-vision.md)
+- [Product Features](Backlog\Product-features.md)
+- [Scenarios](Backlog\Scenarios.md)
+- [User Stories](Backlog\User-personas.md)
+- [User Personas](Backlog\User-stories.md)
+- [Initial QA Strategy](Backlog\QA.md)
 
 <br>
 
@@ -311,14 +350,19 @@ We have outlined an example of hardware and software requirements based on one o
 
 ## Execution Results
 
-| Test Type | Status |
+| Test Metrics | Status |
 |:----------|:-------|
 | Unit Tests | 100% Pass |
 | Integration Tests | 100% Pass |
 | System Tests | 100% Pass |
 | Security Tests | 100% Pass |
+| Test Coverage | 25% coverage |
 
-- **Screenshots and Detailed Logs:** Available in `/screenshots` folder.
+<br> 
+
+**Screenshots and Detailed Logs:** Available in `/BacklogTests` folder.
+
+<br>
 
 <br>
 
@@ -400,7 +444,7 @@ docker ps
 
 <br>
 
-### Comparison Case Study between NUnit and xUnit 
+### Comparison between NUnit and xUnit 
 - https://stackoverflow.com/questions/9769047/nunit-vs-xunit
 
 <br>
@@ -420,13 +464,17 @@ docker ps
 
 <br>
 
+## Case Studies and Reports
+
+- [Improving Code Coverage](CaseStudies\Improving_Code_Coverage.md)
+- [Analysis between .NET Framework - xUnit vs NUnit](CaseStudies\Comparative_Analysis_xUnit_NUnit)
+- [Report on AI Usage during Research & Development]()
+
+<br>
+
 ## TODO 
 
-- Merge cu README IS
-- De verificat link diagrame
 - Mutation Testing (optional)
-- Analiza Comparativa - Coverage Before & After
-- Case Study - xUnit vs NUnit
 - Video Prezentare
 - Screenshoturi la teste
 - Raport Utilizare AI
