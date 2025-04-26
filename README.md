@@ -364,6 +364,28 @@ We have outlined an example of hardware and software requirements based on one o
 
 <br>
 
+![](BacklogTests/Tests1.jpg)
+
+<br>
+
+![](BacklogTests/Tests2.jpg)
+
+<br>
+
+![](BacklogTests/Coverage1.jpg)
+
+<br>
+
+![](BacklogTests/Coverage2.jpg)
+
+<br>
+
+![](BacklogTests/Coverage3.jpg)
+
+<br>
+
+![](BacklogTests/Mutations1.png)
+
 <br>
 
 ## AI Tool Usage in Testing
@@ -474,9 +496,7 @@ docker ps
 
 ## TODO 
 
-- Mutation Testing (optional)
 - Video Prezentare
-- Screenshoturi la teste
 - Raport Utilizare AI
 - Prezentare Powerpoint
 
