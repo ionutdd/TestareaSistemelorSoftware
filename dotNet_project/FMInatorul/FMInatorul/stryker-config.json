@@ -1,0 +1,10 @@
+﻿{
+  "stryker-config": {
+    "test-projects": [
+      "C:/Users/ionut/Desktop/TSS/OurProject/FMINATORUL/dotNet_project/FMInatorul/FMInatorul.Tests/FMInatorul.Tests.csproj"
+    ],
+    "reporters": [ "html", "progress" ],
+    "mutate": [ "Controllers/**/*.cs" ],
+    "coverage-analysis": "all"
+  }
+}
