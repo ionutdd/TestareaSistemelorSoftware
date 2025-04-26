@@ -261,6 +261,8 @@ These tests explicitly focus on the security of the StudentsController, ensuring
 
 - *Report Generator* - Package used for generating the HTML cover report based on the output XML created by Coverlet Collector. 
 
+- *NUnit* – The tests are explicitly written using the NUnit framework, utilizing [Test] attributes to define individual test cases and [TestFixture] to group related tests together. NUnit provides a flexible and powerful way to structure and execute tests independently.
+
 - *Stryker.NET* - Package that offers mutation testing for our .NET Core and .NET Framework projects. It allows us to test our tests by temporarily inserting bugs. 
 
 <br>
