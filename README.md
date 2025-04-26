@@ -42,6 +42,25 @@
 
 <br>
 
+## Project Team
+
+- Bobic Teona-Cristiana, grupa 334
+- Craciun Alexandru-Emilian, , grupa 334
+- Dobrin Ionut-Alexandru, grupa 334
+- Zugravu Alexandra-Daniela, grupa 334
+
+<br>
+
+## Demo Recording
+
+**Demos for Application **<br>
+https://drive.google.com/drive/folders/1xtdYpRfc5MC_he19hkcUQl3Nkel8XM9g
+
+**Demo for Test Results **<br>
+https://drive.google.com/file/d/1-gG_IZOW5oFtardDsA3mqe23ik4gSMQS/view?usp=drive_link
+
+<br>
+
 ## Project Overview
 FMInatorul is a web-based educational platform designed to help students learn more effectively by automatically generating quizzes from uploaded study materials (PDFs) and enabling real-time collaboration in virtual rooms.
 
@@ -242,6 +261,8 @@ These tests explicitly focus on the security of the StudentsController, ensuring
 
 - *Report Generator* - Package used for generating the HTML cover report based on the output XML created by Coverlet Collector. 
 
+- *Stryker.NET* - Package that offers mutation testing for our .NET Core and .NET Framework projects. It allows us to test our tests by temporarily inserting bugs. 
+
 <br>
 
 **Example Test:**
@@ -357,6 +378,7 @@ We have outlined an example of hardware and software requirements based on one o
 | System Tests | 100% Pass |
 | Security Tests | 100% Pass |
 | Test Coverage | 25% coverage |
+| Mutation Tests | 66% killed |
 
 <br> 
 
@@ -385,6 +407,14 @@ We have outlined an example of hardware and software requirements based on one o
 <br>
 
 ![](BacklogTests/Mutations1.png)
+
+<br>
+
+![](BacklogTests/Mutations2.png)
+
+<br>
+
+![](BacklogTests/Mutations3.png)
 
 <br>
 
@@ -499,6 +529,7 @@ docker ps
 - Video Prezentare
 - Raport Utilizare AI
 - Prezentare Powerpoint
+- Stryker.NET Documentatie
 
 <br>
 
