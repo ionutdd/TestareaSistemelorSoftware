@@ -521,7 +521,7 @@ docker ps
 ## Case Studies and Reports
 
 - [Improving Code Coverage](CaseStudies/Improving_Code_Coverage.md)
-- [Analysis between .NET Framework - xUnit vs NUnit](CaseStudies/Comparative_Analysis_xUnit_NUnit.md)
+- [Analysis between .NET Framework - xUnit vs NUnit](CaseStudies/Analysis_xUnit_NUnit.md)
 - [Report on AI Usage during Research & Development](CaseStudies/Report_for_AI_usage.md)
 
 <br>
