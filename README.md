@@ -527,13 +527,6 @@ docker ps
 
 <br>
 
-## TODO 
-
-- Raport Utilizare AI
-- Prezentare Powerpoint
-
-<br>
-
 ## References
 
 [1] M. Roper, *Software Testing*, McGraw-Hill, 1994. <br>
